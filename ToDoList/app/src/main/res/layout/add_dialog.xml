@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:layout_marginBottom="@dimen/medium"
+                                       android:layout_marginTop="@dimen/medium"
+                                       android:layout_marginLeft="@dimen/big"
+                                       android:layout_marginRight="@dimen/big"
+                                       app:cardCornerRadius="@dimen/small_normal"
+                                       app:cardMaxElevation="@dimen/medium"
+                                       app:cardPreventCornerOverlap="true"
+                                       app:cardElevation="@dimen/medium"
+                                       app:cardUseCompatPadding="false"
+                                       app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_margin="@dimen/normal"
+                android:padding="@dimen/normal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView android:id="@+id/tv_title"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      style="@style/Title"
+                      android:textColor="@color/colorAccent"
+                      android:text="Some random title"
+                      tools:text="some random text"/>
+            <EditText android:id="@+id/ed_title"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      style="@style/Title"
+                      tools:text="some random text"/>
+            <EditText android:id="@+id/ed_description"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      style="@style/Description"
+                      tools:text="some random text"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/fab_margin"
+                    app:srcCompat="@drawable/ic_add_white_24dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/view_master_parent"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView android:id="@+id/view_parent"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginBottom="@dimen/medium"
+                                       android:layout_marginTop="@dimen/medium"
+                                       android:layout_marginLeft="@dimen/big"
+                                       android:layout_marginRight="@dimen/big"
+                                       android:foreground="?android:attr/selectableItemBackground"
+                                       android:clickable="true"
+                                       android:focusable="true"
+                                       app:cardCornerRadius="@dimen/small_normal"
+                                       app:cardMaxElevation="@dimen/medium"
+                                       app:cardPreventCornerOverlap="true"
+                                       app:cardElevation="@dimen/medium"
+                                       app:cardUseCompatPadding="false">
+        <LinearLayout
+                      android:orientation="vertical"
+                      android:layout_margin="@dimen/normal"
+                      android:padding="@dimen/normal"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+            <TextView android:id="@+id/tv_title"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      style="@style/Title"
+                      tools:text="some random text"/>
+            <TextView android:id="@+id/tv_description"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      style="@style/Description"
+                      tools:text="some random text"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
