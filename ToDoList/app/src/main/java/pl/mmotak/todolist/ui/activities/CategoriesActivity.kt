@@ -1,7 +1,6 @@
 package pl.mmotak.todolist.ui.activities
 
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
@@ -19,9 +18,9 @@ import pl.mmotak.todolist.R
 import pl.mmotak.todolist.models.toParcelTodoCategory
 import pl.mmotak.todolist.ui.adapters.BaseAdapter
 import pl.mmotak.todolist.ui.adapters.CategoriesAdapter
+import pl.mmotak.todolist.ui.dialogs.AddItemDialog
 import pl.mmotak.todolist.ui.viewmodels.CategoriesViewModel
 import pl.mmotak.todolist.ui.viewmodels.TodoViewModelFactory
-import pl.mmotak.todolist.ui.dialogs.AddItemDialog
 
 
 class CategoriesActivity : AppCompatActivity(), KodeinAware {
@@ -55,25 +54,9 @@ class CategoriesActivity : AppCompatActivity(), KodeinAware {
         })
         rc_categories.adapter = adapter
         rc_categories.layoutManager = GridLayoutManager(this, 2)
-//
-//        adapter.setItems(TodoCategoryFactory().generateCategories(12))
-
-//        val set = AnimatorInflater.loadAnimator(this, R.animator.move) as AnimatorSet
-//        set.setTarget(fab) // set the view you want to animate
-        //set.start()
 
         fab.setOnClickListener { view ->
             AddItemDialog.show(this)
-            // add new but editable at top of list
-//            hidden_view.visibility = View.VISIBLE
-//            animSlideDown(hidden_view)
-            //set.start()
-//            ObjectAnimator.ofFloat(view, "translationY", -200f).apply {
-//                duration = 2000
-//                start()
-//            }
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
         }
     }
 
