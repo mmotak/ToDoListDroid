@@ -14,6 +14,7 @@ import pl.mmotak.todolist.data.TodoCategoryFactory
 import pl.mmotak.todolist.models.ParcelTodoCategory
 import pl.mmotak.todolist.models.TodoCategory
 import pl.mmotak.todolist.ui.adapters.ItemAdapter
+import pl.mmotak.todolist.ui.dialogs.AddItemDialog
 
 class ItemsActivity : AppCompatActivity() {
 
@@ -35,8 +36,9 @@ class ItemsActivity : AppCompatActivity() {
         setUpVies()
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            AddItemDialog.show(this)
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
         }
     }
 

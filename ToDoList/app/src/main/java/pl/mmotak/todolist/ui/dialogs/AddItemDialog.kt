@@ -7,17 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import kotlinx.android.synthetic.main.add_dialog.*
 import pl.mmotak.todolist.R
-import android.view.Window.FEATURE_NO_TITLE
-import android.view.Window
-import android.graphics.drawable.ColorDrawable
-import android.graphics.Color
 
 
 class AddItemDialog : DialogFragment() {
 
     companion object {
-        private val TAG : String = AddItemDialog.javaClass.simpleName
+        private val TAG : String = AddItemDialog::class.java.simpleName
         fun show(fragmentActivity : FragmentActivity) : AddItemDialog {
             val dialog = AddItemDialog()
             dialog.show(fragmentActivity.supportFragmentManager, TAG)
@@ -36,24 +33,21 @@ class AddItemDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         //dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-
         return dialog
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.add_dialog, container, false)
-        return view
+        val rootView = inflater.inflate(R.layout.add_dialog, container, false)
+        isCancelable = false
+        return rootView
     }
 
     override fun onStart() {
         super.onStart()
-
         dialog?.window?.apply {
+            setWindowAnimations(R.style.DialogAnimation)
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
-//        if (dialog != null) {
-//            dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-//            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//        }
+        b_cancel.setOnClickListener { dismiss() }
     }
 }

@@ -1,15 +1,13 @@
 package pl.mmotak.todolist.ui.activities
 
 import android.os.Bundle
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
-import android.view.animation.LayoutAnimationController
-import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_categories.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -21,6 +19,9 @@ import pl.mmotak.todolist.ui.adapters.CategoriesAdapter
 import pl.mmotak.todolist.ui.dialogs.AddItemDialog
 import pl.mmotak.todolist.ui.viewmodels.CategoriesViewModel
 import pl.mmotak.todolist.ui.viewmodels.TodoViewModelFactory
+import pl.mmotak.todolist.utils.BackPressed
+import pl.mmotak.todolist.utils.toast
+import java.util.concurrent.TimeUnit
 
 
 class CategoriesActivity : AppCompatActivity(), KodeinAware {
@@ -31,6 +32,11 @@ class CategoriesActivity : AppCompatActivity(), KodeinAware {
     private lateinit var adapter: CategoriesAdapter
     private lateinit var viewModel: CategoriesViewModel
 
+//    private lateinit var backPressed: BackPressed
+    private val EXIT_TIMEOUT: Long = 800
+    private val compositeDisposable = CompositeDisposable()
+    private val backButtonClickSource = PublishSubject.create<Boolean>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
@@ -38,6 +44,38 @@ class CategoriesActivity : AppCompatActivity(), KodeinAware {
         setUpVies()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CategoriesViewModel::class.java)
         viewModel.allCategories().observe(this, Observer { categories -> adapter.setItems(categories) })
+
+        // not working ;?
+//        backPressed = BackPressed(this,
+//            { toast("Please press back once more to exit") },
+//            { finish() })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        compositeDisposable.add(backButtonClickSource
+            .debounce(100, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { toast("Please press back once more to exit") }
+            .timeInterval(TimeUnit.MILLISECONDS)
+            .skip(1)
+            .filter { it.time() < EXIT_TIMEOUT }
+            .subscribe { super.onBackPressed() })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.run {
+            dispose()
+            clear()
+        }
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        backButtonClickSource.onNext(true)
+        //backPressed.event()
     }
 
     private fun setUpVies() {
@@ -60,26 +98,4 @@ class CategoriesActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
-    private fun animSlideDown(viewToAnim: ViewGroup) {
-        val set = AnimationSet(true)
-        val animation = TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -1.0f,
-            Animation.RELATIVE_TO_SELF, 0.0f
-        )
-
-        animation.duration = 2000
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationRepeat(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) {}
-        })
-        set.addAnimation(animation)
-
-        val controller = LayoutAnimationController(
-            set, 0.25f
-        )
-        viewToAnim.layoutAnimation = controller
-    }
 }
